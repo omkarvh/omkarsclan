@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Test Page</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script> <!-- Razorpay Checkout script -->
+</head>
+<body>
+
+  <h1>Digital product sale </h1>
+
+    <h1>Test Razorpay Payment</h1>
+
+    <button id="pay-btn">Pay Now</button>
+
+    <script>
+        // Create Razorpay options for payment
+        var options = {
+            "key": "YOUR_RAZORPAY_KEY_ID", // Enter the Key ID generated from Razorpay Dashboard
+            "amount": "50000", // Amount in paise (e.g., 50000 paise = INR 500)
+            "currency": "INR",
+            "name": "Your Company",
+            "description": "Test Transaction",
+            "handler": function (response) {
+                // Handle successful payment
+                alert("Payment successful! Your file is now downloading.");
+                downloadFile(); // Trigger file download
+            },
+            "prefill": {
+                "name": "Test User",
+                "email": "testuser@example.com",
+                "contact": "9999999999"
+            },
+            "theme": {
+                "color": "#3399cc"
+            },
+            "modal": {
+                "ondismiss": function () {
+                    alert("Payment cancelled or failed! Please try again.");
+                }
+            }
+        };
+
+        // Function to download the file after successful payment
+        function downloadFile() {
+            window.location.href = "https://drive.google.com/uc?export=download&id=1kjK_9oB6c15qOGpixz1YeEpHruEEHr-5";
+        }
+
+        // Attach event to the "Pay Now" button to trigger Razorpay checkout
+        document.getElementById('pay-btn').onclick = function(e) {
+            e.preventDefault();
+            var rzp = new Razorpay(options);
+            rzp.open(); // Open Razorpay checkout
+        };
+    </script>
+
+</body>
+</html>
